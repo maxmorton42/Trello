@@ -1,2 +1,7 @@
-<h1>Lists#index</h1>
-<p>Find me in app/views/lists/index.html.erb</p>
+<h1>Select A To-Do List To View It</h1>
+<%= link_to 'Add List', new_board_list_path(@board) %>
+<ul>
+  <% @lists.each do |list| %>
+    <li><%= link_to list.name, [@board, list] %></li>
+  <% end %>
+</ul>
