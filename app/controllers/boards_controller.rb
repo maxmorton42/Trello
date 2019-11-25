@@ -1,7 +1,7 @@
 class BoardsController < ApplicationController
   before_action :set_board, only: [:show, :update, :edit, :destroy]
   def index
-    @boards = Board.all
+    @boards = Board.all_boards
   end
 
   def show
@@ -15,12 +15,10 @@ class BoardsController < ApplicationController
   end
 
   def create
-     @board = Board.new(board_params)
-    if @board.save
-      redirect_to board_path(@board)
-    else
-      render :new
-    end
+     @board = Board.create_board(board_params)
+   
+      redirect_to boards_path
+
   end
 
   def destroy
@@ -29,7 +27,7 @@ class BoardsController < ApplicationController
   end
 
   def update
-    if @board.update
+    if @board.update(board_params)
       redirect_to board_path
     else
       render :edit
@@ -37,10 +35,11 @@ class BoardsController < ApplicationController
   end
 
   def set_board
-  @board = Board.find(params[:id])
+  @board = Board.single_board(params[:id])
   end
 
   def board_params
     params.require(:board).permit(:name)
   end
 end
+
